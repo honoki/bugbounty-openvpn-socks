@@ -1,0 +1,3 @@
+*.ovpn
+.env
+*.auth

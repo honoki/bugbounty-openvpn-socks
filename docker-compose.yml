@@ -1,0 +1,85 @@
+version: "3.9"
+services:
+  
+  # hackerone
+  openvpn-hackerone:
+    image: dperson/openvpn-client
+    cap_add:
+      - net_admin
+    networks:
+      - default
+    read_only: true
+    tmpfs:
+      - /run
+      - /tmp
+    security_opt:
+      - label:disable
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./vpn/hackerone/:/vpn
+    ports:
+      - "1080:1080"
+  socks-proxy-hackerone:
+    image: serjs/go-socks5-proxy
+    depends_on:
+      - openvpn-hackerone
+    network_mode: "service:openvpn-hackerone"
+    stdin_open: true
+    tty: true
+
+  # intigriti
+  openvpn-intigriti:
+    image: dperson/openvpn-client
+    cap_add:
+      - net_admin
+    networks:
+      - default
+    read_only: true
+    tmpfs:
+      - /run
+      - /tmp
+    security_opt:
+      - label:disable
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./vpn/intigriti/:/vpn
+    ports:
+      - "1081:1080"
+    command: '-a ${INTIGRITI_EMAIL};${INTIGRITI_PASSWORD}'
+  socks-proxy-intigriti:
+    image: serjs/go-socks5-proxy
+    depends_on:
+      - openvpn-intigriti
+    network_mode: "service:openvpn-intigriti"
+    stdin_open: true
+    tty: true
+
+  # yeswehack
+  openvpn-yeswehack:
+    image: dperson/openvpn-client
+    cap_add:
+      - net_admin
+    networks:
+      - default
+    read_only: true
+    tmpfs:
+      - /run
+      - /tmp
+    security_opt:
+      - label:disable
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./vpn/yeswehack/:/vpn
+    ports:
+      - "1082:1080"
+    command: '-a ${YESWEHACK_EMAIL};${YESWEHACK_PASSWORD}'
+  socks-proxy-yeswehack:
+    image: serjs/go-socks5-proxy
+    depends_on:
+      - openvpn-yeswehack
+    network_mode: "service:openvpn-yeswehack"
+    stdin_open: true
+    tty: true
