@@ -20,7 +20,7 @@ services:
       - ./vpn/hackerone/:/vpn
     ports:
       - "1080:1080"
-  socks-proxy-hackerone:
+  socks-hackerone:
     image: serjs/go-socks5-proxy
     depends_on:
       - openvpn-hackerone
@@ -48,7 +48,7 @@ services:
     ports:
       - "1081:1080"
     command: '-a ${INTIGRITI_EMAIL};${INTIGRITI_PASSWORD}'
-  socks-proxy-intigriti:
+  socks-intigriti:
     image: serjs/go-socks5-proxy
     depends_on:
       - openvpn-intigriti
@@ -76,7 +76,7 @@ services:
     ports:
       - "1082:1080"
     command: '-a ${YESWEHACK_EMAIL};${YESWEHACK_PASSWORD}'
-  socks-proxy-yeswehack:
+  socks-yeswehack:
     image: serjs/go-socks5-proxy
     depends_on:
       - openvpn-yeswehack
