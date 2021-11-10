@@ -2,6 +2,8 @@
 
 This project uses Docker to run multiple VPN tunnels simultaneously from the same machine, and exposes a SOCKS proxy for each separate VPN connection.
 
+![Diagram of OpenVPN/SOCKS ](docs/diagram.png)
+
 ## Setup
 
 1. `git clone https://github.com/honoki/bugbounty-openvpn-socks`
