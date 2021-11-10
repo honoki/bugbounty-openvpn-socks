@@ -24,6 +24,9 @@ services:
     image: serjs/go-socks5-proxy
     depends_on:
       - openvpn-hackerone
+    environment:
+      - PROXY_USER=${PROXY_USER}
+      - PROXY_PASSWORD=${PROXY_PASSWORD}
     network_mode: "service:openvpn-hackerone"
     stdin_open: true
     tty: true
@@ -52,6 +55,9 @@ services:
     image: serjs/go-socks5-proxy
     depends_on:
       - openvpn-intigriti
+    environment:
+      - PROXY_USER=${PROXY_USER}
+      - PROXY_PASSWORD=${PROXY_PASSWORD}
     network_mode: "service:openvpn-intigriti"
     stdin_open: true
     tty: true
@@ -80,6 +86,9 @@ services:
     image: serjs/go-socks5-proxy
     depends_on:
       - openvpn-yeswehack
+    environment:
+      - PROXY_USER=${PROXY_USER}
+      - PROXY_PASSWORD=${PROXY_PASSWORD}
     network_mode: "service:openvpn-yeswehack"
     stdin_open: true
     tty: true
