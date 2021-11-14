@@ -44,3 +44,34 @@ If you are using tools without built-in proxy support, you can use [`proxychains
 You can use the SOCKS proxy to tunnel Burp traffic through the VPN via "Project options":
 
 ![](docs/burp.png)
+
+## BBRF
+
+If you're a [BBRF](https://github.com/honoki/bbrf-client) user, you will not be surprised to learn this integrates nicely. BBRF v1.2 contains some additional features to store and use proxy configurations.
+
+First, I recommend deploying this project on a public VPS. (It runs nicely alongside [BBRF Server](https://github.com/honoki/bbrf-server) if you have it deployed!) Please make sure to set up authentication on your SOCKS proxies by editing the `PROXY_USER` and `PROXY_PASSWORD` variables in `.env`.
+
+After that, configure your proxy settings in BBRF as follows:
+
+```bash
+bbrf proxy set hackerone socks5://user:pass@yourserver.com:1080
+bbrf proxy set intigriti-1 socks5://user:pass@yourserver.com:1081
+bbrf proxy set yeswehack socks5://user:pass@yourserver.com:1082
+bbrf proxy set intigriti-2 socks5://user:pass@yourserver.com:1083
+```
+
+Now you can update or create a program's proxy settings with a custom tag `proxy` as follows:
+
+```bash
+bbrf program update my_hackerone_program -t proxy:hackerone
+bbrf new secret_program -t proxy:intigriti-1
+```
+
+Now update your automation scripts to always send traffic through the right tunnel, e.g.:
+
+```bash
+# use the vpn config in whatever tool you're running
+# note that the use of double quotes will allow this
+# to work even if `bbrf proxy` returns an empty string
+curl -x "$(bbrf proxy)" ifconfig.co
+```
